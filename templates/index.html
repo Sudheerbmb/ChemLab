@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChemLab Simulator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="lab-container">
+        <header>
+            <h1><span class="flask-icon">🧪</span> ChemLab Simulator</h1>
+        </header>
+        <main>
+            <section class="compound-selection">
+                <h2>Select Compounds</h2>
+                <div id="compound-list">
+                    {% for c in compounds %}
+                    <div class="compound-card" draggable="true" data-formula="{{ c.formula }}" data-name="{{ c.name }}">
+                        <span class="compound-name">{{ c.name }}</span>
+                        <span class="compound-formula">({{ c.formula }})</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            <section class="lab-simulation">
+                <h2>Virtual Tumbler</h2>
+                <div id="tumbler-area">
+                    <div id="tumbler">
+                        <div id="tumbler-content"></div>
+                        <div id="tumbler-liquid"></div>
+                    </div>
+                    <div id="tumbler-label">Drop compounds here!</div>
+                </div>
+                <button id="react-btn">React!</button>
+                <div id="result"></div>
+                <div id="animation"></div>
+            </section>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html> 
