@@ -11,7 +11,21 @@
             <h1><span class="flask-icon">🧪</span> ChemLab Simulator</h1>
         </header>
         <main>
+            <section class="search-section">
+                <input type="text" id="search-bar" placeholder="Search for a compound or element..." autocomplete="off">
+                <div id="autocomplete-list"></div>
+                <div id="search-result"></div>
+            </section>
             <section class="compound-selection">
+                <h2>Select Elements</h2>
+                <div id="element-list">
+                    {% for e in elements %}
+                    <div class="element-card" draggable="true" data-formula="{{ e.symbol }}" data-name="{{ e.name }}" style="background: {{ e.color }};">
+                        <span class="element-symbol">{{ e.symbol }}</span>
+                        <span class="element-name">{{ e.name }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
                 <h2>Select Compounds</h2>
                 <div id="compound-list">
                     {% for c in compounds %}
@@ -28,8 +42,10 @@
                     <div id="tumbler">
                         <div id="tumbler-content"></div>
                         <div id="tumbler-liquid"></div>
+                        <div id="tumbler-bubbles"></div>
+                        <div id="tumbler-sparkle"></div>
                     </div>
-                    <div id="tumbler-label">Drop compounds here!</div>
+                    <div id="tumbler-label">Drop elements or compounds here!</div>
                 </div>
                 <button id="react-btn">React!</button>
                 <div id="result"></div>
@@ -37,6 +53,22 @@
             </section>
         </main>
     </div>
+    <!-- AI Assistant Dial and Panel -->
+    <div id="ai-assistant-dial" title="Ask ChemLab AI Assistant">
+        <span>🤖</span>
+    </div>
+    <div id="ai-assistant-panel" class="hidden">
+        <div class="ai-header">
+            <span>ChemLab AI Assistant</span>
+            <button id="ai-close-btn">×</button>
+        </div>
+        <div id="ai-chat-area"></div>
+        <form id="ai-chat-form">
+            <input type="text" id="ai-chat-input" placeholder="Type your chemistry question..." autocomplete="off">
+            <button type="button" id="ai-mic-btn" title="Speak"><span id="ai-mic-icon">🎤</span></button>
+            <button type="submit">Send</button>
+        </form>
+    </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
-</html> 
+</html>

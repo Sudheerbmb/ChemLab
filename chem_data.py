@@ -1,7 +1,27 @@
 from collections import namedtuple
 
+# Element as a namedtuple (tuple)
+Element = namedtuple('Element', ['name', 'symbol', 'color'])
+
 # Compound as a namedtuple (tuple)
 Compound = namedtuple('Compound', ['name', 'formula', 'color'])
+
+# List of elements (list)
+elements = [
+    Element('Hydrogen', 'H2', '#e3e3e3'),
+    Element('Oxygen', 'O2', '#b3d1ff'),
+    Element('Sodium', 'Na', '#f4e285'),
+    Element('Chlorine', 'Cl2', '#b2ffb2'),
+    Element('Iron', 'Fe', '#b87333'),
+    Element('Copper', 'Cu', '#b87333'),
+    Element('Zinc', 'Zn', '#c0c0c0'),
+    Element('Potassium', 'K', '#ffe066'),
+    Element('Iodine', 'I2', '#a259a2'),
+    Element('Lead', 'Pb', '#a9a9a9'),
+    Element('Silver', 'Ag', '#d9d9d9'),
+    Element('Barium', 'Ba', '#e0ffe0'),
+    # Add more elements as needed
+]
 
 # List of compounds (list)
 compounds = [
@@ -17,9 +37,21 @@ compounds = [
     Compound('Iron(III) Chloride', 'FeCl3', 'yellow'),
     Compound('Calcium Carbonate', 'CaCO3', 'white'),
     Compound('Magnesium Sulfate', 'MgSO4', 'white'),
-    Compound('Zinc', 'Zn', 'gray'),
+    Compound('Zinc Sulfate', 'ZnSO4', 'white'),
     Compound('Copper', 'Cu', 'red-brown'),
     Compound('Hydrogen Peroxide', 'H2O2', 'colorless'),
+    Compound('Nitric Acid', 'HNO3', 'colorless'),
+    Compound('Potassium Sulfate', 'K2SO4', 'white'),
+    Compound('Sodium Chloride', 'NaCl', 'white'),
+    Compound('Water', 'H2O', 'colorless'),
+    Compound('Iron(III) Hydroxide', 'Fe(OH)3', 'brown'),
+    Compound('Copper(II) Chloride', 'CuCl2', 'blue-green'),
+    Compound('Barium Sulfate', 'BaSO4', 'white'),
+    Compound('Silver Iodide', 'AgI', 'yellow'),
+    Compound('Lead(II) Iodide', 'PbI2', 'yellow'),
+    Compound('Potassium Nitrate', 'KNO3', 'white'),
+    Compound('Ammonium Chloride', 'NH4Cl', 'white'),
+    # Add more compounds as needed
 ]
 
 # Reaction as a custom class
@@ -61,6 +93,24 @@ reactions = {
         ['Fe(OH)3', 'NH4Cl'],
         'Formation of iron(III) hydroxide: Iron(III) chloride reacts with ammonia to form iron(III) hydroxide (brown precipitate) and ammonium chloride.',
         'precipitate'
+    ),
+    frozenset(['Na', 'Cl2']): Reaction(
+        ['Na', 'Cl2'],
+        ['NaCl'],
+        'Synthesis: Sodium reacts with chlorine gas to form sodium chloride (table salt).',
+        'synthesis'
+    ),
+    frozenset(['H2', 'O2']): Reaction(
+        ['H2', 'O2'],
+        ['H2O'],
+        'Combination: Hydrogen reacts with oxygen to form water.',
+        'combination'
+    ),
+    frozenset(['Fe', 'O2']): Reaction(
+        ['Fe', 'O2'],
+        ['Fe2O3'],
+        'Rusting: Iron reacts with oxygen to form iron(III) oxide (rust).',
+        'rusting'
     ),
     # Add more reactions as needed
 } 

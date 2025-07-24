@@ -1,0 +1,146 @@
+ChemLab DSA Documentation
+
+1. Data Structures Used
+----------------------
+
+**a. List**
+- Used for storing all compounds and elements.
+- Example:
+  - `compounds` is a list of Compound namedtuples (e.g., Hydrochloric Acid, NaOH, etc.).
+  - `elements` is a list of Element namedtuples (e.g., H2, O2, Na, Cl2, etc.).
+
+**b. Dict (Dictionary)**
+- Used for fast reaction lookup.
+- Example:
+  - `reactions` is a dictionary where the key is a frozenset of reactant formulas (e.g., frozenset(['HCl', 'NaOH'])), and the value is a Reaction object.
+
+**c. Set / Frozenset**
+- Used for unordered matching of reactants in reactions.
+- Example:
+  - When looking up a reaction, the selected reactants are converted to a frozenset so that order does not matter.
+
+**d. Tuple / namedtuple**
+- Used for representing elements and compounds with named fields.
+- Example:
+  - `Compound = namedtuple('Compound', ['name', 'formula', 'color'])`
+  - `Element = namedtuple('Element', ['name', 'symbol', 'color'])`
+
+**e. Custom Class**
+- Used for representing a Reaction.
+- Example:
+  - `class Reaction:` with fields for reactants, products, description, and animation type.
+
+**f. Trie**
+- Used for fast search/autocomplete of compounds and elements.
+- Example:
+  - `compound_trie` and `element_trie` allow searching for compounds/elements by prefix.
+
+**g. Graph (Adjacency List)**
+- Used for representing reaction pathways.
+- Example:
+  - `reaction_graph` is a defaultdict(set) where each node (compound/element) points to possible products.
+
+**h. Stack**
+- Used for undo/redo functionality (not exposed in UI yet).
+- Example:
+  - `undo_stack` and `redo_stack` store the history of compound/element additions.
+
+**i. Queue (deque)**
+- Used for BFS in finding reaction chains.
+- Example:
+  - `queue = deque([(start, [start])])` in the BFS algorithm.
+
+**j. Priority Queue (heapq)**
+- Used for finding the shortest reaction chain (Dijkstra's algorithm).
+- Example:
+  - `queue = [(0, [start])]` and `heapq.heappop(queue)` in the shortest path algorithm.
+
+
+2. Algorithms Used
+------------------
+
+**a. Linear Search**
+- Used to find a compound or element by formula or symbol.
+- Example:
+  - `find_compound(formula)` iterates through the compounds list to find a match.
+  - E.g., searching for 'NaOH' returns Sodium Hydroxide.
+
+**b. Trie Search (Autocomplete)**
+- Used to suggest compounds/elements as the user types.
+- Example:
+  - Typing 'Hyd' in the search box returns 'Hydrochloric Acid', 'Hydrogen Peroxide', and 'Hydrogen'.
+
+**c. Dictionary Lookup**
+- Used for fast reaction matching.
+- Example:
+  - Looking up `frozenset(['HCl', 'NaOH'])` in `reactions` returns the neutralization reaction.
+
+**d. Breadth-First Search (BFS)**
+- Used to find a chain of reactions from one compound/element to another.
+- Example:
+  - Finding a path from 'Na' to 'NaCl' explores possible reactions step by step.
+
+**e. Dijkstra's Algorithm (Priority Queue)**
+- Used to find the shortest reaction chain between two compounds/elements.
+- Example:
+  - Finding the shortest path from 'Fe' to 'Fe2O3' (rusting) uses a priority queue to minimize steps.
+
+**f. Stack Operations**
+- Used for undo/redo (not exposed in UI yet).
+- Example:
+  - Each addition/removal of a compound/element is pushed to the stack.
+
+
+3. Concrete Examples from ChemLab
+---------------------------------
+
+**Example 1: Neutralization Reaction**
+- User drags 'HCl' and 'NaOH' into the tumbler.
+- The backend forms `frozenset(['HCl', 'NaOH'])` and looks up the reaction in the `reactions` dict.
+- The result is: 'HCl + NaOH → NaCl + H2O'.
+- Data structures used: list (compounds), dict (reactions), frozenset (reactant matching), namedtuple (Compound), custom class (Reaction).
+- Algorithm used: dict lookup, linear search (to get product details).
+
+**Example 2: Synthesis Reaction**
+- User drags 'Na' and 'Cl2' into the tumbler.
+- The backend forms `frozenset(['Na', 'Cl2'])` and looks up the reaction.
+- The result is: 'Na + Cl2 → NaCl'.
+- Data structures used: list (elements), dict (reactions), frozenset, namedtuple (Element), custom class (Reaction).
+- Algorithm used: dict lookup, linear search.
+
+**Example 3: BFS for Multi-step Reaction**
+- User wants to find a chain from 'Fe' to 'Fe2O3'.
+- The backend uses BFS (queue) to explore possible reaction paths in the reaction graph.
+- Data structures used: graph (adjacency list), queue (deque), set (visited nodes).
+- Algorithm used: BFS.
+
+**Example 4: Autocomplete**
+- User types 'Pot' in the search box.
+- The Trie returns 'Potassium Iodide', 'Potassium Sulfate', and 'Potassium'.
+- Data structures used: Trie.
+- Algorithm used: Trie search.
+
+**Example 5: Dijkstra's Algorithm**
+- User wants the shortest reaction chain from 'H2' to 'H2O'.
+- The backend uses a priority queue to find the shortest path.
+- Data structures used: graph, priority queue (heapq).
+- Algorithm used: Dijkstra's algorithm.
+
+
+4. Summary Table
+----------------
+
+| Data Structure / Algorithm | Where Used | Example |
+|---------------------------|------------|---------|
+| List                      | Compounds, Elements | All compounds/elements |
+| Dict                      | Reactions  | Reaction lookup |
+| Set/Frozenset             | Reactant matching | frozenset(['HCl', 'NaOH']) |
+| Namedtuple                | Compound, Element | Compound('NaOH', ...) |
+| Custom Class              | Reaction   | Reaction([...], [...], ...) |
+| Trie                      | Autocomplete | Typing 'Hyd' |
+| Graph                     | Reaction pathways | BFS, Dijkstra |
+| Stack                     | Undo/Redo  | Not in UI yet |
+| Queue (deque)             | BFS        | Multi-step reaction |
+| Priority Queue (heapq)    | Dijkstra   | Shortest path |
+
+This document provides a comprehensive overview of how advanced data structures and algorithms are used in the ChemLab project, with real examples from the codebase and the actual chemical data. 
