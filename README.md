@@ -8,15 +8,29 @@ A Flask-based web app to simulate chemical reactions, show equations, and animat
 - View balanced chemical equations
 - Simple animations for reaction types
 - Advanced Python data structures and algorithms
+- AI Assistant powered by Grok (set API key via environment variable)
 
 ## Run Locally
 
 ```bash
 pip install -r requirements.txt
+export GROQ_API_KEY=your_grok_api_key_here  # or set in your shell/terminal
 python app.py
 ```
 
 Open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
+
+---
+
+## Deploy on Vercel
+
+1. **Push your code to GitHub.**
+2. **Connect your repo to Vercel** (https://vercel.com/import).
+3. **Set the environment variable** in Vercel dashboard:
+   - `GROQ_API_KEY=your_grok_api_key_here`
+4. **Deploy!**
+
+Vercel will use `vercel.json` and `app.py` to serve your Flask app.
 
 ---
 
