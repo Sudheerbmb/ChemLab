@@ -8,11 +8,14 @@ import requests
 import markdown
 from langchain_groq import ChatGroq
 import re
+import os
 
-GROQ_API_KEY = "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"
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 GROQ_MODEL = "llama-3.1-8b-instant"
 
 def ask_grok(prompt, model_name=GROQ_MODEL):
+    if not GROQ_API_KEY:
+        return "Grok API key not set. Please set the GROQ_API_KEY environment variable."
     try:
         llm = ChatGroq(api_key=GROQ_API_KEY, model=model_name)
         response = llm.invoke(prompt)
