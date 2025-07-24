@@ -1,4 +1,5 @@
 Flask==2.3.2
 requests
-google-generativeai
-# No extra dependencies required for web search integration (uses PubChem API and Gemini) 
+langchain_groq
+markdown
+# No extra dependencies required for web search integration (uses PubChem API and Grok) 

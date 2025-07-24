@@ -5,18 +5,25 @@ from reaction_engine import (
     get_dsa_info, autocomplete_compounds, autocomplete_elements
 )
 import requests
-import google.generativeai as genai
+import markdown
+from langchain_groq import ChatGroq
+import re
 
-GEMINI_API_KEY = "AIzaSyBTJDEH6EjPt4yJLZfx2ipWjxRvSl1Eww4"
-genai.configure(api_key=GEMINI_API_KEY)
+GROQ_API_KEY = "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"
+GROQ_MODEL = "llama-3.1-8b-instant"
 
-def gemini_ask(prompt):
+def ask_grok(prompt, model_name=GROQ_MODEL):
     try:
-        model = genai.GenerativeModel('gemini-pro')
-        response = model.generate_content(prompt)
-        return response.text.strip()
+        llm = ChatGroq(api_key=GROQ_API_KEY, model=model_name)
+        response = llm.invoke(prompt)
+        return response.content if response else "Error getting answer from Grok."
     except Exception as e:
-        return f"Gemini API error: {e}"
+        return f"Grok API error: {e}"
+
+def strip_html_tags(text):
+    # Remove HTML tags
+    clean = re.compile('<.*?>')
+    return re.sub(clean, '', text)
 
 app = Flask(__name__)
 
@@ -53,10 +60,10 @@ def react():
             'dsa_log': log
         })
     else:
-        # Use Gemini to generate a reaction
+        # Use Grok to generate a reaction
         prompt = f"What is the chemical reaction when {' and '.join(selected)} react? Give the balanced equation and product names."
-        gemini_result = gemini_ask(prompt)
-        return jsonify({'error': 'No reaction found for selected compounds or elements. (Local)', 'gemini': gemini_result, 'dsa_log': log}), 404
+        grok_result = ask_grok(prompt)
+        return jsonify({'error': 'No reaction found for selected compounds or elements. (Local)', 'grok': strip_html_tags(grok_result), 'dsa_log': log}), 404
 
 @app.route('/reaction_chain', methods=['POST'])
 def reaction_chain():
@@ -132,9 +139,9 @@ def web_search_api():
         return jsonify({'result': None})
     pubchem_result = search_pubchem(query)
     if 'error' in pubchem_result:
-        # Use Gemini as fallback
-        gemini_result = gemini_ask(f"Give me the IUPAC name and molecular formula for {query}.")
-        return jsonify({'result': gemini_result})
+        # Use Grok as fallback
+        grok_result = ask_grok(f"Give me the IUPAC name and molecular formula for {query}.")
+        return jsonify({'result': strip_html_tags(grok_result)})
     # Format a nice result
     result_str = f"IUPAC Name: {pubchem_result['iupac']}\nMolecular Formula: {pubchem_result['formula']}"
     return jsonify({'result': result_str})
