@@ -1,0 +1,42 @@
+[
+  {
+    "symbol": "H",
+    "name": "Hydrogen",
+    "atomicNumber": 1,
+    "atomicMass": 1.008,
+    "group": 1,
+    "period": 1,
+    "category": "Non-metal",
+    "valency": 1,
+    "applications": [
+      "Used in fuel cells",
+      "Rocket propulsion",
+      "Production of ammonia"
+    ],
+    "commonReactionPartners": [
+      { "symbol": "O", "name": "Oxygen" },
+      { "symbol": "Cl", "name": "Chlorine" },
+      { "symbol": "N", "name": "Nitrogen" }
+    ]
+  },
+  {
+    "symbol": "Na",
+    "name": "Sodium",
+    "atomicNumber": 11,
+    "atomicMass": 22.989,
+    "group": 1,
+    "period": 3,
+    "category": "Alkali Metal",
+    "valency": 1,
+    "applications": [
+      "Street lighting",
+      "Coolant in nuclear reactors",
+      "Manufacture of table salt"
+    ],
+    "commonReactionPartners": [
+      { "symbol": "Cl", "name": "Chlorine" },
+      { "symbol": "H2O", "name": "Water" },
+      { "symbol": "O", "name": "Oxygen" }
+    ]
+  }
+] 
